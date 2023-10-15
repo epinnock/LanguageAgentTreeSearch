@@ -109,9 +109,15 @@ class GPT35(GPTChat):
     def __init__(self):
         super().__init__("gpt-3.5-turbo")
 
-class WizardCoder(GPTChat):
+class WizardCoder(ModelBase):
     def __init__(self):
         super().__init__("WizardLM/WizardCoder-Python-13B-V1.0")
+    
+    def generate(self, prompt: str, max_tokens: int = 8024, stop_strs: Optional[List[str]] = None, temperature: float = 0, num_comps=1) -> Union[List[str], str]:
+        prompt = prompt+"\n###Response: \n\n```python"
+        print('prompt '+prompt)
+        return gpt_completion(self.name, prompt, 2048, stop_strs, temperature, num_comps)
+
 
 
 class GPTDavinci(ModelBase):
