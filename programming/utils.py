@@ -7,7 +7,8 @@ import jsonlines
 from typing import List
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
-
+openai.api_key = "EMPTY"
+openai.api_base = "http://localhost:9090/v1"
 
 def make_printv(verbose: bool):
     def print_v(*args, **kwargs):

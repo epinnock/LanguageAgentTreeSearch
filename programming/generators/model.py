@@ -59,6 +59,7 @@ def gpt_chat(
     temperature: float = 0.0,
     num_comps=1,
 ) -> Union[List[str], str]:
+    print(openai.api_base)
     response = openai.ChatCompletion.create(
         model=model,
         messages=[dataclasses.asdict(message) for message in messages],
@@ -107,6 +108,10 @@ class GPT4(GPTChat):
 class GPT35(GPTChat):
     def __init__(self):
         super().__init__("gpt-3.5-turbo")
+
+class WizardCoder(GPTChat):
+    def __init__(self):
+        super().__init__("WizardLM/WizardCoder-Python-13B-V1.0")
 
 
 class GPTDavinci(ModelBase):
