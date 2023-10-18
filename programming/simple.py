@@ -25,21 +25,29 @@ def run_simple(
     num_items = len(dataset)
     num_success = 0
     for i, item in enumerate_resume(dataset, log_path):
-        cur_pass = 0
-        is_solved = False
-        cur_func_impl = ""
-        while cur_pass < pass_at_k:
-            cur_func_impl = gen.func_impl(item["prompt"], model, "simple")
-            assert isinstance(cur_func_impl, str)
-            is_passing = exe.evaluate(item["entry_point"], cur_func_impl, item["test"], timeout = 20 if is_leetcode else 10)
-            if is_passing:
-                is_solved = True
-                num_success += 1
-                break
-            cur_pass += 1
-        item["solution"] = cur_func_impl
-        
-        item["is_solved"] = is_solved
-        write_jsonl(log_path, [item], append=True)
+        try:
+            cur_pass = 0
+            is_solved = False
+            cur_func_impl = ""
+            while cur_pass < pass_at_k:
+                try:
+                    cur_func_impl = gen.func_impl(item["prompt"], model, "simple")
+                    assert isinstance(cur_func_impl, str)
+                    is_passing = exe.evaluate(item["entry_point"], cur_func_impl, item["test"], timeout = 20 if is_leetcode else 10)
+                except:
+                    is_passing = False
+                if is_passing:
+                    is_solved = True
+                    num_success += 1
+                    break
+                cur_pass += 1
+            item["solution"] = cur_func_impl
+            
+            item["is_solved"] = is_solved
+            log_path = log_path.replace('/', '+')
 
-        print_v(f'completed {i+1}/{num_items}: acc = {round(num_success/(i+1), 2)}')
+            write_jsonl(log_path, [item], append=True)
+
+            print_v(f'completed {i+1}/{num_items}: acc = {round(num_success/(i+1), 2)}')
+        except:
+            print("Could not Process")

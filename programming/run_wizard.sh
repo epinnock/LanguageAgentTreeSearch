@@ -4,7 +4,7 @@ python main.py \
   --dataset_path ./benchmarks/humaneval-py.jsonl \
   --strategy "simple" \
   --language "py" \
-  --model "WizardLM/WizardCoder-Python-13B-V1.0" \
+  --model "Phind/Phind-CodeLlama-34B-v2" \
   --pass_at_k "1" \
   --max_iters "8" \
   --verbose

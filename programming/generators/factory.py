@@ -18,7 +18,7 @@ def model_factory(model_name: str) -> ModelBase:
         return GPT4()
     elif model_name == "gpt-3.5-turbo-0613":
         return GPT35()
-    elif model_name == "WizardLM/WizardCoder-Python-13B-V1.0":
+    elif model_name == "Phind/Phind-CodeLlama-34B-v2":
         return WizardCoder()    
     elif model_name == "starchat":
         return StarChat()
